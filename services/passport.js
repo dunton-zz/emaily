@@ -1,7 +1,23 @@
 // FILE FOR PASSPORT JS USE
 const passport = require("passport"); // import passport
 const GoogleStrategy = require("passport-google-oauth20").Strategy; // import GoogleStrategy
+const FacebookStrategy = require("passport-facebook").Strategy;
+const mongoose = require("mongoose");
 const keys = require("../config/keys.js"); // get api keys
+
+const User = mongoose.model("users"); // 1 arg means fetch, 2 args mean load into
+
+// done() takes an error object for its first argument
+
+passport.serializeUser((user, done) => {
+  done(null, user.id); // refers to mongo identifier (shortcut to user._id.oid)
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => {
+    done(null, user);
+  });
+});
 
 // tells passport to use google strategy
 // params tell Google how to authenticate
@@ -14,9 +30,47 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // this is where we save user info
-      console.log("access token", accessToken);
-      console.log("refresh token", refreshToken);
-      console.log("profile", profile);
+      User.findOne({ googleId: profile.id }) // query to see if user exists returns a promise
+        .then(existingUser => {
+          if (existingUser) {
+            // we already have a user with this id
+            done(null, existingUser);
+          } else {
+            // we dont have a user record with this id
+            new User({ googleId: profile.id })
+              .save() // create and save new instance of a user
+              .then(user => {
+                done(null, user);
+              });
+          }
+        });
+    }
+  )
+);
+
+// set up Facebook authentication
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: keys.facebookClientID,
+      clientSecret: keys.facebookClientSecret,
+      callbackURL: "/auth/facebook/callback"
+    },
+    (accessToken, refreshToken, profile, done) => {
+      User.findOne({ facebookId: profile.id }) // query to see if user exists returns a promise
+        .then(existingUser => {
+          if (existingUser) {
+            // we already have a user with this id
+            done(null, existingUser);
+          } else {
+            // we dont have a user record with this id
+            new User({ facebookId: profile.id })
+              .save() // create and save new instance of a user
+              .then(user => {
+                done(null, user);
+              });
+          }
+        });
     }
   )
 );
