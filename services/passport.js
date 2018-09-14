@@ -29,22 +29,18 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       // this is where we save user info
-      User.findOne({ googleId: profile.id }) // query to see if user exists returns a promise
-        .then(existingUser => {
-          if (existingUser) {
-            // we already have a user with this id
-            done(null, existingUser);
-          } else {
-            // we dont have a user record with this id
-            new User({ googleId: profile.id })
-              .save() // create and save new instance of a user
-              .then(user => {
-                done(null, user);
-              });
-          }
-        });
+      const existingUser = await User.findOne({ googleId: profile.id }); // query to see if user exists returns a promise
+
+      if (existingUser) {
+        // we already have a user with this id
+        done(null, existingUser);
+      } else {
+        // we dont have a user record with this id
+        const user = await new User({ googleId: profile.id }).save(); // create and save new instance of a user
+        done(null, user);
+      }
     }
   )
 );
@@ -58,21 +54,16 @@ passport.use(
       callbackURL: "/auth/facebook/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ facebookId: profile.id }) // query to see if user exists returns a promise
-        .then(existingUser => {
-          if (existingUser) {
-            // we already have a user with this id
-            done(null, existingUser);
-          } else {
-            // we dont have a user record with this id
-            new User({ facebookId: profile.id })
-              .save() // create and save new instance of a user
-              .then(user => {
-                done(null, user);
-              });
-          }
-        });
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ facebookId: profile.id }); // query to see if user exists returns a promise
+      if (existingUser) {
+        // we already have a user with this id
+        done(null, existingUser);
+      } else {
+        // we dont have a user record with this id
+        const user = await new User({ facebookId: profile.id }).save();
+        done(null, user);
+      }
     }
   )
 );
