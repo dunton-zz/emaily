@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Payments from "./Payments";
 
 class Header extends Component {
   renderContent = () => {
@@ -8,19 +9,17 @@ class Header extends Component {
       case null:
         return;
       case false:
-        // TODO: ADD FB LOGIN
-        return (
-          <li>
-            <a href="/auth/google">Login With Google</a>
-          </li>
-        );
+        // add facebook login
+        return <a href="/auth/google">Login With Google</a>;
       default:
-        // logged in is default
-        return (
+        return [
+          <li>
+            <Payments />
+          </li>,
           <li>
             <a href="/api/logout">Logout</a>
           </li>
-        );
+        ];
     }
   };
 
@@ -43,7 +42,7 @@ class Header extends Component {
   }
 }
 
-// mapsStateToProps <- self expanatory name
+// mapStateToProps <- self expanatory name
 function mapStateToProps(state) {
   return { auth: state.auth };
 }
