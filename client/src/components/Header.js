@@ -10,13 +10,17 @@ class Header extends Component {
         return;
       case false:
         // add facebook login
-        return <a href="/auth/google">Login With Google</a>;
+        return (
+          <li>
+            <a href="/auth/google">Login With Google</a>
+          </li>
+        );
       default:
         return [
-          <li>
+          <li key="1">
             <Payments />
           </li>,
-          <li>
+          <li key="2">
             <a href="/api/logout">Logout</a>
           </li>
         ];
@@ -33,9 +37,7 @@ class Header extends Component {
           >
             Emaily
           </Link>
-          <ul className="right">
-            <li>{this.renderContent()}</li>
-          </ul>
+          <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
     );
