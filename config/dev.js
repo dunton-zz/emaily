@@ -6,5 +6,7 @@ module.exports = {
   mongoURI: "mongodb://ryan:Gobroncos15@ds245772.mlab.com:45772/emaily-dev",
   cookieKey: "teiosrtniresntn132yon412efintrsoetn324t90t",
   facebookClientID: "334240960645843",
-  facebookClientSecret: "c190557ee8880ffb9e5c075029008228"
+  facebookClientSecret: "c190557ee8880ffb9e5c075029008228",
+  stripePublishableKey: "pk_test_A7wWtpO52mSMKolReZBTKTYi",
+  stripeSecretKey: "sk_test_gJ50cjC0wwQre2S23V2efNUA"
 };
