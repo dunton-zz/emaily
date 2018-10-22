@@ -5,6 +5,7 @@ const passport = require("passport"); // import passport
 const bodyParser = require("body-parser"); // import body-parser
 const keys = require("./config/keys"); // import keys
 require("./models/User"); // import in User model schema, so it executes
+require("./models/Survey"); // import in Survey model schema, so it executes
 require("./services/passport"); // import passport.js file, this makes it execute
 
 mongoose.connect(keys.mongoURI);
