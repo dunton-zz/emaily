@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === "production") {
   // EXPRESS will serve up the index.html file if it doesnt recognize route
   const path = require("path");
   app.get("*", (req, res) => {
-    res.sendFiled(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
 
