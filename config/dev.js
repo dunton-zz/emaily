@@ -8,5 +8,7 @@ module.exports = {
   facebookClientID: "334240960645843",
   facebookClientSecret: "c190557ee8880ffb9e5c075029008228",
   stripePublishableKey: "pk_test_A7wWtpO52mSMKolReZBTKTYi",
-  stripeSecretKey: "sk_test_gJ50cjC0wwQre2S23V2efNUA"
+  stripeSecretKey: "sk_test_gJ50cjC0wwQre2S23V2efNUA",
+  sendGridKey:
+    "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"
 };

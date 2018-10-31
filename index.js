@@ -34,6 +34,7 @@ app.use(passport.session());
 // returns function then immediately calls function with app object
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // EXPRESS will serve up production assets like our main.js or main.css file
